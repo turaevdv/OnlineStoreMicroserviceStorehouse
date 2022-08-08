@@ -1,0 +1,20 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: online-store-microservice-storehouse
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5400/storehouse_microservice
+    username: postgres_user
+    password: qwerty007
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: false
+    hibernate.ddl-auto: none
+  liquibase:
+    enabled: true
+    change-log: classpath:/db.migration/db.changelog.master.xml
