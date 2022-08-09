@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.turaev.storehouse.exception.AddressNotFoundException;
 import ru.turaev.storehouse.exception.BaseException;
 import ru.turaev.storehouse.exception.StorehouseNotFoundException;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionApiHandler {
-    @ExceptionHandler(StorehouseNotFoundException.class)
+    @ExceptionHandler({StorehouseNotFoundException.class, AddressNotFoundException.class})
     public ResponseEntity<?> handleUserNotFoundException(BaseException ex) {
         log.warn("An error has occurred. Error message - {}", ex.getMessage());
         HttpStatus httpStatus = ex.getStatus();

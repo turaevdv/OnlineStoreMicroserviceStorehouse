@@ -5,10 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.turaev.storehouse.dto.StorehouseDto;
+import ru.turaev.storehouse.exception.AddressNotFoundException;
 import ru.turaev.storehouse.exception.StorehouseNotFoundException;
 import ru.turaev.storehouse.mapper.StorehouseMapper;
 import ru.turaev.storehouse.model.Storehouse;
 import ru.turaev.storehouse.repository.StorehouseRepository;
+import ru.turaev.storehouse.restconsumer.AddressRestConsumer;
 import ru.turaev.storehouse.service.StorehouseService;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 public class StorehouseServiceImpl implements StorehouseService {
     private final StorehouseRepository repository;
     private final StorehouseMapper storehouseMapper;
+    private final AddressRestConsumer addressRestConsumer;
 
     @Override
     public Storehouse getStorehouseById(long id) {
@@ -39,6 +42,9 @@ public class StorehouseServiceImpl implements StorehouseService {
     @Transactional
     public Storehouse save(StorehouseDto storehouseDto) {
         log.info("Trying to save a new storehouse");
+        if (!addressRestConsumer.isAddressExist(storehouseDto.getAddressId())) {
+            throw new AddressNotFoundException("Address with id " + storehouseDto.getAddressId() + " not found");
+        }
         Storehouse storehouse = repository.save(storehouseMapper.fromDto(storehouseDto));
         log.info("The storehouse was saved with id = {}", storehouse.getId());
         return storehouse;
@@ -48,6 +54,9 @@ public class StorehouseServiceImpl implements StorehouseService {
     @Transactional
     public Storehouse updateStorehouse(long id, StorehouseDto storehouseDto) {
         log.info("Trying to update a storehouse with id = {}", id);
+        if (!addressRestConsumer.isAddressExist(storehouseDto.getAddressId())) {
+            throw new AddressNotFoundException("Address with id " + storehouseDto.getAddressId() + " not found");
+        }
         Storehouse storehouse = getStorehouseById(id);
         storehouse.setName(storehouseDto.getName());
         storehouse.setAddressId(storehouseDto.getAddressId());
