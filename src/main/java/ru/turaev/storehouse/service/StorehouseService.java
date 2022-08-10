@@ -11,4 +11,5 @@ public interface StorehouseService {
     Storehouse save(StorehouseDto storehouseDto);
     Storehouse updateStorehouse(long id, StorehouseDto storehouseDto);
     Storehouse delete(long id);
+    boolean isStorehouseExist(long id);
 }

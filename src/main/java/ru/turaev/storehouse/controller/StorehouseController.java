@@ -38,4 +38,9 @@ public class StorehouseController {
     public Storehouse delete(@PathVariable long id) {
         return storehouseService.delete(id);
     }
+
+    @GetMapping("/exist/{id}")
+    public boolean isStorehouseExist(@PathVariable long id) {
+        return storehouseService.isStorehouseExist(id);
+    }
 }

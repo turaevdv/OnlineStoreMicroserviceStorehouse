@@ -73,4 +73,9 @@ public class StorehouseServiceImpl implements StorehouseService {
         log.info("The storehouse with id = {} successfully deleted", id);
         return storehouse;
     }
+
+    @Override
+    public boolean isStorehouseExist(long id) {
+        return repository.existsById(id);
+    }
 }

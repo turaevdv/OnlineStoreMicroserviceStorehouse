@@ -16,7 +16,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ExceptionApiHandler {
     @ExceptionHandler({StorehouseNotFoundException.class, AddressNotFoundException.class})
-    public ResponseEntity<?> handleUserNotFoundException(BaseException ex) {
+    public ResponseEntity<?> handleNotFoundException(BaseException ex) {
         log.warn("An error has occurred. Error message - {}", ex.getMessage());
         HttpStatus httpStatus = ex.getStatus();
         Map<String, Object> responseMap = new HashMap<>();
