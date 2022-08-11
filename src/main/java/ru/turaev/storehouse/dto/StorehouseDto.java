@@ -1,11 +1,13 @@
 package ru.turaev.storehouse.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class StorehouseDto {
-    private final String name;
-    private final int addressId;
+    private String name;
+    private int addressId;
 }
